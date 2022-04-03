@@ -1,7 +1,7 @@
 //April 3rd 2022 All Blogs shows up twice? Delete function works on second set of All Blogs. However, if 
 //I click on New Blog all the All Blogs show up again?
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BlogList from './BlogList';
 
 
@@ -18,7 +18,17 @@ const Home = () => {
     const newBlogs = blogs.filter(blog =>blog.id !== id);
     setBlogs(newBlogs);
 }
-    
+
+//before return and doesn't need to be stored in const. usually fetch data or communicate with authentication service
+//known as side effects. fires on every render
+useEffect(() => {
+
+    console.log('use effect ran');
+    console.log(blogs);
+
+});
+
+
 //this passes bloglist component as prop
     return ( 
         <div className="home">
