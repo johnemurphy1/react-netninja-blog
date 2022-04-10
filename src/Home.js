@@ -13,6 +13,7 @@ const Home = () => {
         { title: 'Web dev top tips', body: 'lorem ipsum...', author: 'yoshi', id: 3},
     ]);
     
+    const [name, setName] = useState('mario')
 
     const handleDelete = (id) =>{
     const newBlogs = blogs.filter(blog =>blog.id !== id);
@@ -24,9 +25,11 @@ const Home = () => {
 useEffect(() => {
 
     console.log('use effect ran');
-    console.log(blogs);
+    console.log(name);
+    //console.log(blogs);
+//empty dependency array only lets function run once. name dependency runs function when 
+}, [name]);
 
-});
 
 
 //this passes bloglist component as prop
@@ -35,6 +38,8 @@ useEffect(() => {
             
             <BlogList blogs={blogs.filter((blog) => blog.author === 'mario')} title="Mario's Blogs."/>
             <BlogList blogs={blogs} title="All Blogs!" handleDelete={handleDelete}/>
+            <button onClick={() => setName('luigi')}>change name</button>
+            <p>{ name }</p>
             </div>
      );
 }
