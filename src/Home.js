@@ -9,7 +9,9 @@ import BlogList from './BlogList';
 const Home = () => {
     const [blogs, setBlogs] = useState(null);
     
-    const [name, setName] = useState('mario')
+    const [name, setName] = useState('mario');
+    const[isLoading, setIsLoading] = useState(true);
+//could wrap useEffect in setTimeout to see the loading message
 
 
 
@@ -23,12 +25,13 @@ useEffect(() => {
         .then(data =>{
             //console.log(data);
             setBlogs(data)
+            setIsLoading(false)
         });
     
     //console.log('use effect ran');
     //console.log(name);
     //console.log(blogs);
-//empty dependency array only lets function run once. name dependency runs function when 
+//empty dependency array only lets function run once on first render. name dependency runs function when 
 }, [name]);
 
 
@@ -37,7 +40,7 @@ useEffect(() => {
     return ( 
         <div className="home">
             
-           
+            {isLoading && <div>Loading...</div>}
             {blogs && <BlogList blogs={blogs} title="All Blogs!"/>}
             <button onClick={() => setName('luigi')}>change name</button>
             <p>{ name }</p>
