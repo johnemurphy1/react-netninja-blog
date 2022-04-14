@@ -11,6 +11,7 @@ const Home = () => {
     
     const [name, setName] = useState('mario');
     const[isLoading, setIsLoading] = useState(true);
+    const[error, setError] = useState(null);
 //could wrap useEffect in setTimeout to see the loading message
 
 
@@ -20,30 +21,39 @@ const Home = () => {
 useEffect(() => {
     fetch('http://localhost:8000/blogs')
         .then(res =>{
-            return res.json()
+            //console.log(res);
+            if(!res.ok){
+                throw Error('could not fetch data')
+            }
+            return res.json();
         })
         .then(data =>{
             //console.log(data);
-            setBlogs(data)
-            setIsLoading(false)
-        });
+            setBlogs(data);
+            setIsLoading(false);
+            setError(null);
+        })
+        .catch(err => {
+            setError(err.message);
+            //console.log(err.message);
+        })    
+        
     
     //console.log('use effect ran');
     //console.log(name);
     //console.log(blogs);
 //empty dependency array only lets function run once on first render. name dependency runs function when 
-}, [name]);
+},[]);
 
 
 
-//this passes bloglist component as prop
+//this passes bloglist component as prop...also, uses conditional rendering &&
     return ( 
         <div className="home">
-            
+            {error && <div>{ error }</div>}
             {isLoading && <div>Loading...</div>}
             {blogs && <BlogList blogs={blogs} title="All Blogs!"/>}
-            <button onClick={() => setName('luigi')}>change name</button>
-            <p>{ name }</p>
+            
             </div>
      );
 }
