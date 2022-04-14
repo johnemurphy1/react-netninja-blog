@@ -59,3 +59,5 @@ useEffect(() => {
 }
 //()invokes function, don't want that in onClick=handleClick} because it would invoke right away
 export default Home;
+
+//to get db.json started npx json-server --watch data/db.json --port 8000
