@@ -7,7 +7,8 @@ const useFetch = (url) =>{
     const[error, setError] = useState(null);
 //could wrap useEffect in setTimeout to see the loading message
 useEffect(() => {
-    fetch(url)
+    const abortCont =  new AbortController();
+    fetch(url, {signal: abortCont.signal})
         .then(res =>{
             //console.log(res);
             if(!res.ok){
@@ -22,8 +23,13 @@ useEffect(() => {
             setError(null);
         })
         .catch(err => {
+            if (err.name === 'AbortError'){
+                console.log('fetch aborted')
+            }else {
+            setIsLoading(false);
             setError(err.message);
             //console.log(err.message);
+            }
         })    
         
     
@@ -31,7 +37,7 @@ useEffect(() => {
     //console.log(name);
     //console.log(blogs);
 //empty dependency array only lets function run once on first render. name dependency runs function when 
-    
+ return () => abortCont.abort();   
 },[url]);
 return {data, isLoading, error}
 }

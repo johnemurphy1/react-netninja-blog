@@ -1,7 +1,7 @@
 //April 3rd 2022 All Blogs shows up twice? Delete function works on second set of All Blogs. However, if 
 //I click on New Blog all the All Blogs show up again?
 
-import { useState, useEffect } from 'react';
+
 import BlogList from './BlogList';
 import useFetch from './useFetch';
 
